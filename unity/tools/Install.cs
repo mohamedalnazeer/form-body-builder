@@ -1,0 +1,10 @@
+var source = "/Users/mohamedali/untitled folder/unity/tools";
+System.IO.Directory.CreateDirectory(UnityEngine.Application.dataPath + "/Form");
+System.IO.Directory.CreateDirectory(UnityEngine.Application.dataPath + "/Editor");
+System.IO.Directory.CreateDirectory(UnityEngine.Application.dataPath + "/Resources");
+System.IO.File.Copy(source + "/FormCharacter.cs", UnityEngine.Application.dataPath + "/Form/FormCharacter.cs", true);
+System.IO.File.Copy(source + "/FormToon.shader", UnityEngine.Application.dataPath + "/Form/FormToon.shader", true);
+System.IO.File.Copy(source + "/FormBuild.cs", UnityEngine.Application.dataPath + "/Editor/FormBuild.cs", true);
+System.IO.File.Copy(source + "/character.json", UnityEngine.Application.dataPath + "/Resources/character.json", true);
+UnityEditor.AssetDatabase.Refresh();
+return "Imported FORM character sources";
