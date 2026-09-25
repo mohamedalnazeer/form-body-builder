@@ -20,10 +20,33 @@ function CharacterMesh({ mesh, highlight }) {
   return (
     <group position={mesh.position} rotation={mesh.rotation}>
       <mesh geometry={geometry} castShadow receiveShadow>
+        {!mesh.unlit && (
+          <mesh
+            geometry={geometry}
+            scale={1.026}
+            renderOrder={-1}
+            castShadow={false}
+            receiveShadow={false}
+          >
+            <meshBasicMaterial
+              color="#171923"
+              side={THREE.BackSide}
+              depthWrite={false}
+              polygonOffset
+              polygonOffsetFactor={1}
+              polygonOffsetUnits={1}
+            />
+          </mesh>
+        )}
         {mesh.unlit ? (
           <meshBasicMaterial color={color} side={THREE.DoubleSide} />
         ) : (
-          <meshToonMaterial color={color} gradientMap={toonRamp} side={THREE.DoubleSide} />
+          <meshToonMaterial
+            color={color}
+            gradientMap={toonRamp}
+            side={THREE.DoubleSide}
+            roughness={0.82}
+          />
         )}
       </mesh>
     </group>
@@ -169,16 +192,18 @@ export default function Avatar({
         style={{ touchAction: 'none' }}
         aria-label="Interactive anime character. Drag to rotate."
       >
-        <ambientLight intensity={0.7} />
+        <ambientLight intensity={0.48} />
+        <hemisphereLight skyColor="#dce8d0" groundColor="#20251d" intensity={0.62} />
         <directionalLight
           position={[-3, 6, 5]}
-          intensity={1.6}
+          intensity={1.85}
           castShadow
           shadow-mapSize={[1024, 1024]}
           shadow-bias={-0.001}
           shadow-normalBias={0.035}
         />
-        <directionalLight position={[4, 3, -3]} intensity={0.6} color="#d0e7b8" />
+        <directionalLight position={[4, 3, -3]} intensity={0.78} color="#b9d8e0" />
+        <pointLight position={[-2.4, 2.9, 2.8]} intensity={0.38} color="#f1c38d" distance={6} />
         <Suspense fallback={null}>
           <Character
             profile={profile}

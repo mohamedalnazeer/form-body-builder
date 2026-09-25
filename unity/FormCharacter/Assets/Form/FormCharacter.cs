@@ -25,7 +25,7 @@ public class FormCharacter : MonoBehaviour {
   rootScale=nodes["root"].localScale;
   foreach(var m in recipe.meshes){var go=new GameObject(m.id);go.transform.SetParent(nodes[m.parent],false);go.transform.localPosition=V(m.position,Vector3.zero);go.transform.localEulerAngles=V(m.rotation,Vector3.zero)*Mathf.Rad2Deg;
    var mesh=new Mesh();mesh.name=m.id;var vertices=new Vector3[m.vertices.Length/3];var normals=new Vector3[vertices.Length];for(int i=0;i<vertices.Length;i++){vertices[i]=new Vector3(m.vertices[i*3],m.vertices[i*3+1],m.vertices[i*3+2]);normals[i]=new Vector3(m.normals[i*3],m.normals[i*3+1],m.normals[i*3+2]);}mesh.vertices=vertices;mesh.triangles=m.triangles;mesh.normals=normals;mesh.RecalculateBounds();go.AddComponent<MeshFilter>().sharedMesh=mesh;resources.Add(mesh);
-   var mat=new Material(toonShader);Color c;if(!ColorUtility.TryParseHtmlString(m.color,out c))c=Color.white;mat.SetColor("_BaseColor",c);mat.SetFloat("_Unlit",m.unlit?1:0);go.AddComponent<MeshRenderer>().sharedMaterial=mat;resources.Add(mat);
+   var mat=new Material(toonShader);Color c;if(!ColorUtility.TryParseHtmlString(m.color,out c))c=Color.white;mat.SetColor("_BaseColor",c);mat.SetFloat("_Unlit",m.unlit?1:0);mat.SetFloat("_OutlineWidth",m.unlit?0f:.018f);go.AddComponent<MeshRenderer>().sharedMaterial=mat;resources.Add(mat);
   }
  }
  public void SetView(string view){targetAngle=view=="back"?180:view=="side"?90:-7.45f;}
